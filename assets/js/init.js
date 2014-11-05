@@ -13,13 +13,7 @@ AT.init = function() {
 
     AT.scene = new THREE.Scene();
 
-    // PATH
-    AT.parent = new THREE.Object3D();
-    AT.scene.add(AT.parent);
     AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
-    AT.parent.add(AT.camera);
-
-    // when resize
     new THREEx.WindowResize(AT.renderer, AT.camera);
 };
 
