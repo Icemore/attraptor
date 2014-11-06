@@ -13,7 +13,8 @@ AT.init = function() {
 
     AT.scene = new THREE.Scene();
 
-    AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+    AT.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 10000);
+    AT.camera.position.z = -600;
 
     var controls = new THREE.TrackballControls(AT.camera);
     controls.rotateSpeed = 1.0;
