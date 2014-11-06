@@ -7,16 +7,20 @@ AT.Music.analyser = null;
 AT.Music.audioBuf = null;
 AT.Music.setup = false;
 AT.Music.N = 2048;
+AT.freq = 0;
 
 AT.Music.init = function() {
     console.log("init music");
     try {
         this.audioCtx = new webkitAudioContext();
         this.loadFile();
-        var loopy_loop = function() { AT.Music.onTick(); requestAnimationFrame(loopy_loop)};
+        var loopy_loop = function() {
+            AT.Music.onTick();
+            requestAnimationFrame(loopy_loop)
+        };
         requestAnimationFrame(loopy_loop);
     } catch(e) {
-        alert('you need web audio support' + e);
+        alert('You need web audio support.' + e);
     }
 };
 
@@ -28,6 +32,7 @@ AT.Music.onTick = function() {
     console.log("tick");
     var data = new Uint8Array(1);
     AT.Music.analyser.getByteFrequencyData(data);
+    AT.freq = data[0];
     console.log(data[0]);
 };
 
