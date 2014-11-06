@@ -13,6 +13,7 @@ AT.init = function() {
 
     AT.scene = new THREE.Scene();
 
-    AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+    AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, AT.far());
+    AT.camera.position.z = AT.finishZ;
     new THREEx.WindowResize(AT.renderer, AT.camera);
 };
