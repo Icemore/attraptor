@@ -16,4 +16,6 @@ AT.init = function() {
     AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, AT.far());
     AT.camera.position.z = AT.finishZ;
     new THREEx.WindowResize(AT.renderer, AT.camera);
+
+    document.addEventListener('mousemove', AT.processMouseMove);
 };

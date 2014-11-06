@@ -12,10 +12,15 @@ AT.moveSpheres = function() {
     }
 };
 
+AT.moveCamera = function() {
+    AT.camera.position.x = AT.relativeMouseX * 500;
+    AT.camera.position.y = AT.relativeMouseY * 500;
+};
 
 AT.render = function() {
     requestAnimationFrame(AT.render);
 
+    AT.moveCamera();
     AT.moveSpheres();
 
     AT.cylinder.rotation.z += 0.01;
