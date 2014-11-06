@@ -1,3 +1,5 @@
+var AT = AT || {};
+
 AT.getCylinder = function() {
     var geometry = new THREE.CylinderGeometry(5, 5, 20, 32);
     var material = new THREE.MeshBasicMaterial({ color: 0xfffff , wireframe: true});
@@ -79,6 +81,7 @@ AT.world = function() {
     AT.scene.add(AT.getSpaceSphere());
 
     AT.createSpheres();
+    AT.game.setObjects(AT.spheres);
 
     var spotLight = new THREE.SpotLight(0xffffff);
     spotLight.position.set(-40, 60, -10);

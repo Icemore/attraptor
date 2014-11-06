@@ -1,4 +1,4 @@
-var AT = {};
+var AT = AT || {};
 
 AT.init = function() {
     AT.renderer = new THREE.WebGLRenderer({antialiasing: true});
