@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Congratulations, game over!</h1>
+<form action="" method="post" name="gameover">
+    {{form.hidden_tag()}}
+    <p>
+        Please enter your username to add your result to leaderboard:<br>
+        {{form.username(size=80)}}<br>
+    </p>
+    <p><input type="submit" value="Post it!"></p>
+</form>
+{% endblock %}

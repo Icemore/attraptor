@@ -8,8 +8,6 @@ Flask-SQLAlchemy==0.16
 Flask-WTF==0.8.4
 Flask-WhooshAlchemy==0.54a
 Jinja2==2.7.3
-MySQL-python==1.2.4
-psycopg2==2.5
 MarkupSafe==0.23
 SQLAlchemy==0.7.9
 Tempita==0.5.2
