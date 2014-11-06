@@ -34,13 +34,13 @@ AT.getPath = function() {
         new THREE.Vector3(0, 40, -40),
         new THREE.Vector3(0, 140, -40),
         new THREE.Vector3(0, 40, 40),
-        new THREE.Vector3(0, -40, 40),
+        new THREE.Vector3(0, -40, 40)
     ]);};
 
 AT.getTube = function(config) {
-    var tube = new THREE.TubeGeometry(config.path, config.segments, 2, config.radiusSegments, config.closed);
+    AT.tube = new THREE.TubeGeometry(config.path, config.segments, 2, config.radiusSegments, config.closed);
 
-    var tubeMesh = THREE.SceneUtils.createMultiMaterialObject(tube, [
+    var tubeMesh = THREE.SceneUtils.createMultiMaterialObject(AT.tube, [
         new THREE.MeshLambertMaterial({
             color: 0x00ff00
         }),
@@ -51,7 +51,7 @@ AT.getTube = function(config) {
             transparent: true
         })]);
 
-    tubeMesh.scale.set(config.scale, config.scale, config.scale);
+    tubeMesh.scale.set(AT.scale, AT.scale, AT.scale);
     return tubeMesh;
 };
 
@@ -59,15 +59,14 @@ AT.world = function() {
     AT.attraptor = AT.getAttraptor();
     AT.scene.add(AT.attraptor);
 
-    AT.tube = AT.getTube({
+    AT.tubeMesh = AT.getTube({
         path: AT.getPath(),
         segments: 400,
         radiusSegments: 12,
-        closed: true,
-        scale: 4
+        closed: true
     });
 
-    AT.scene.add(AT.tube);
+    AT.scene.add(AT.tubeMesh);
 
     AT.setUpLight();
 };

@@ -14,8 +14,14 @@ AT.init = function() {
 
     AT.scene = new THREE.Scene();
 
-    AT.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 10000);
-    AT.camera.position.z = -600;
+    var sceneCamera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 10000);
+    sceneCamera.position.z = -600;
+
+    var attraptorCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 10000);
+    AT.atrCam = attraptorCamera;
+    AT.toggleCamera = function() { AT.camera = (AT.camera === sceneCamera) ? attraptorCamera : sceneCamera; };
+
+    AT.camera = sceneCamera;
 
     var controls = new THREE.TrackballControls(AT.camera);
     controls.rotateSpeed = 1.0;
@@ -29,4 +35,8 @@ AT.init = function() {
     AT.controls = controls;
 
     new THREEx.WindowResize(AT.renderer, AT.camera);
+
+    AT.binormal = new THREE.Vector3();
+    AT.normal = new THREE.Vector3();
+    AT.scale = 3;
 };
