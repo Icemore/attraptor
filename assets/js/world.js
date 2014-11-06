@@ -23,15 +23,9 @@ AT.getSpaceSphere = function() {
 };
 
 AT.setUpLight = function() {
-    var spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.position.set(-40, 60, -10);
-    spotLight.intensity = 2;
-    AT.scene.add(spotLight);
-
-    var spotLight2 = new THREE.SpotLight(0x5192e9);
-    spotLight2.position.set(40, -60, 30);
-    spotLight2.intensity = 1.5;
-    AT.scene.add(spotLight2);
+    var light = new THREE.DirectionalLight( 0xffffff );
+    light.position.set( 0, 0, 1 );
+    AT.scene.add( light );
 };
 
 AT.getPath = function() {

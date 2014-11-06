@@ -2,6 +2,7 @@ var AT = {};
 
 AT.init = function() {
     AT.renderer = new THREE.WebGLRenderer({antialiasing: true});
+    AT.renderer.setClearColor( 0xf0f0f0 );
     AT.renderer.setSize(window.innerWidth, window.innerHeight);
     AT.renderer.physicallyBasedShading = true;
     AT.renderer.domElement.style.position = 'absolute';
