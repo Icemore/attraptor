@@ -14,5 +14,17 @@ AT.init = function() {
     AT.scene = new THREE.Scene();
 
     AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    var controls = new THREE.TrackballControls(AT.camera);
+    controls.rotateSpeed = 1.0;
+    controls.zoomSpeed = 1.2;
+    controls.panSpeed = 0.8;
+    controls.noZoom = false;
+    controls.noPan = false;
+    controls.staticMoving = true;
+    controls.dynamicDampingFactor = 0.3;
+    controls.keys = [ 65, 83, 68 ];
+    AT.controls = controls;
+
     new THREEx.WindowResize(AT.renderer, AT.camera);
 };
