@@ -21,9 +21,9 @@ AT.init = function() {
     AT.atrCam = attraptorCamera;
     AT.toggleCamera = function() { AT.camera = (AT.camera === sceneCamera) ? attraptorCamera : sceneCamera; };
 
-    AT.camera = sceneCamera;
+    AT.camera = AT.atrCam;
 
-    var controls = new THREE.TrackballControls(AT.camera);
+    var controls = new THREE.TrackballControls(sceneCamera);
     controls.rotateSpeed = 1.0;
     controls.zoomSpeed = 1.2;
     controls.panSpeed = 0.8;
@@ -38,5 +38,5 @@ AT.init = function() {
 
     AT.binormal = new THREE.Vector3();
     AT.normal = new THREE.Vector3();
-    AT.scale = 3;
+    AT.scale = 120;
 };

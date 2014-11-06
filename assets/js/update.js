@@ -6,8 +6,6 @@ AT.update = function(delta) {
     var looptime = 20 * 1000;
     var t = ( time % looptime ) / looptime;
 
-    var pos = AT.tube.parameters.path.getPointAt(t);
-    pos.multiplyScalar(AT.scale);
 
     // interpolation
     var segments = AT.tube.tangents.length;
@@ -21,12 +19,13 @@ AT.update = function(delta) {
     var offset = 15;
     AT.normal.copy(AT.binormal).cross(dir);
 
-    // We move on a offset on its binormal
+    var pos = AT.tube.parameters.path.getPointAt(t);
+    pos.multiplyScalar(AT.scale);
     pos.add(AT.normal.clone().multiplyScalar(offset));
 
-    AT.atrCam.position.copy(pos);
+    AT.attraptor.position.copy(pos);
 
     var lookAt = AT.tube.parameters.path.getPointAt((t + 30 / AT.tube.parameters.path.getLength() ) % 1).multiplyScalar(AT.scale);
-    AT.atrCam.matrix.lookAt(AT.atrCam.position, lookAt, AT.normal);
-    AT.atrCam.rotation.setFromRotationMatrix(AT.atrCam.matrix, AT.atrCam.rotation.order);
+    AT.atrCam.matrix.lookAt(AT.attraptor.position, lookAt, AT.normal);
+    AT.attraptor.rotation.setFromRotationMatrix(AT.atrCam.matrix, AT.atrCam.rotation.order);
 };

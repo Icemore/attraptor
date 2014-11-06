@@ -1,7 +1,8 @@
 AT.getAttraptor = function() {
-    var geometry = new THREE.CubeGeometry(100, 100, 10);
-    var material = new THREE.MeshBasicMaterial( { color: 0xaaaaff, wireframe: true } );
-    return new THREE.Mesh(geometry, material);
+    var geometry = new THREE.CylinderGeometry(0, 60, 60, 4, false);
+    var material = new THREE.MeshLambertMaterial({ color: 0xFF0000, wireframe:true });
+    var mesh = new THREE.Mesh(geometry, material);
+    return mesh;
 };
 
 AT.getSpaceSphere = function() {
@@ -40,16 +41,14 @@ AT.getPath = function() {
 AT.getTube = function(config) {
     AT.tube = new THREE.TubeGeometry(config.path, config.segments, 2, config.radiusSegments, config.closed);
 
-    var tubeMesh = THREE.SceneUtils.createMultiMaterialObject(AT.tube, [
-        new THREE.MeshLambertMaterial({
-            color: 0x00ff00
-        }),
-        new THREE.MeshBasicMaterial({
-            color: 0x00ff00,
-            opacity: 0.3,
-            wireframe: true,
-            transparent: true
-        })]);
+    var transparent = new THREE.MeshBasicMaterial({
+        color: 0x00ff00,
+        wireframe: true,
+        transparent: false,
+        side: THREE.doubleSided
+    });
+
+    var tubeMesh = THREE.SceneUtils.createMultiMaterialObject(AT.tube, [transparent]);
 
     tubeMesh.scale.set(AT.scale, AT.scale, AT.scale);
     return tubeMesh;
@@ -57,6 +56,8 @@ AT.getTube = function(config) {
 
 AT.world = function() {
     AT.attraptor = AT.getAttraptor();
+    AT.attraptor.add(AT.atrCam);
+    AT.atrCam.position.set(0,0,200);
     AT.scene.add(AT.attraptor);
 
     AT.tubeMesh = AT.getTube({
