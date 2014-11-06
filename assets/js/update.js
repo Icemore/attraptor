@@ -1,0 +1,3 @@
+AT.update = function(delta) {
+
+};
