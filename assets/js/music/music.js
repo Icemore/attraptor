@@ -5,8 +5,8 @@ AT.Music.context = null;
 AT.Music.analyser = null;
 AT.Music.buffer = null;
 AT.Music.setup = false;
-AT.Music.N = 2048;
-AT.freq = 0;
+AT.Music.N = 64;
+AT.freq = 0.1;
 
 AT.Music.init = function() {
     console.log("init music");
@@ -38,9 +38,12 @@ AT.Music.onTick = function() {
 AT.Music.play = function(arraybuffer) {
     AT.Music.context.decodeAudioData(arraybuffer, function (buf) {
         AT.Music.source = AT.Music.context.createBufferSource();
-
         AT.Music.source.connect(AT.Music.context.destination);
         AT.Music.source.buffer = buf;
+
+        AT.Music.analyser = AT.Music.context.createAnalyser();
+        AT.Music.source.connect(AT.Music.analyser);
+
         AT.Music.source.start(0);
         AT.Music.setup = true;
     });
@@ -50,7 +53,6 @@ AT.Music.loadAndPlay = function(file) {
     var freader = new FileReader();
 
     freader.onload = function (e) {
-        console.log(e);
         AT.Music.play(e.target.result);
     };
     freader.readAsArrayBuffer(file);
@@ -60,8 +62,7 @@ function handleFileSelect(evt) {
     var files = evt.target.files;
     if (AT.Music.source) {
         AT.Music.source.stop();
-    };
-    console.log(files);
+    }
     var output = [];
     for (var i = 0, f; f = files[i]; i++) {
         output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
