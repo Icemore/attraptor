@@ -1,0 +1,19 @@
+#points-wrapper {
+    position: absolute;
+    top: 10px;
+}
+
+#karma-wrapper {
+    position: absolute;
+    top: 40px;
+}
+
+#health-wrapper {
+    position: absolute;
+    top: 70px;
+}
+
+.ui-text {
+    color: white;
+    font-size: 20px;
+}

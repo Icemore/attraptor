@@ -20,6 +20,12 @@ AT.game.init = function() {
     AT.attraptor.init();
 };
 
+AT.updateScores = function() {
+  $('#points').text(AT.game.curPoints);
+  $('#health').text(AT.game.curHealth);
+  $('#karma').text(AT.game.curKarma);
+};
+
 AT.game.getAttraptotModel = function() {
     return AT.attraptor.models[[this.curKarma, this.curHealth]];
 };

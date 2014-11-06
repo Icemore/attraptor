@@ -32,7 +32,7 @@ AT.render = function() {
     AT.moveSpheres();
     AT.rotateAttractor();
 
-    AT.game.processCollision()
-
+    AT.game.processCollision();
+    AT.updateScores();
     AT.renderer.render(AT.scene, AT.camera);
 };
