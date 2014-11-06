@@ -17,5 +17,7 @@ AT.init = function() {
     AT.camera.position.z = AT.finishZ;
     new THREEx.WindowResize(AT.renderer, AT.camera);
 
+    AT.game.init();
+
     document.addEventListener('mousemove', AT.processMouseMove);
 };
