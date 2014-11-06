@@ -42,6 +42,7 @@ AT.Music.play = function(arraybuffer) {
         AT.Music.source.connect(AT.Music.context.destination);
         AT.Music.source.buffer = buf;
         AT.Music.source.start(0);
+        AT.Music.setup = true;
     });
 };
 
@@ -51,7 +52,6 @@ AT.Music.loadAndPlay = function(file) {
     freader.onload = function (e) {
         console.log(e);
         AT.Music.play(e.target.result);
-        AT.Music.setup = true;
     };
     freader.readAsArrayBuffer(file);
 };
