@@ -1,6 +1,5 @@
 AT.Music = {};
 
-AT.Music.audio = new Audio();
 AT.Music.source = null;
 AT.Music.context = null;
 AT.Music.analyser = null;
@@ -31,34 +30,15 @@ AT.Music.onTick = function() {
     if (!AT.Music.setup) {
         return;
     }
-    if (!AT.Music.analyser)
-    console.log("tick");
     var data = new Uint8Array(1);
     AT.Music.analyser.getByteFrequencyData(data);
     AT.freq = data[0];
 };
 
-AT.Music.uploadAudion = function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
-    console.log(files);
-};
-
-AT.Music.loadFile = function() {
-    var req = new XMLHttpRequest();
-    req.open("GET",AT.Music.audioSrc,true);
-    req.responseType = "arraybuffer";
-    req.onload = function() {
-        AT.Music.context.decodeAudioData(req.response, function(buffer) {
-            AT.Music.buffer = buffer;
-            AT.Music.play();
-        });
-    };
-    req.send();
-};
-
 AT.Music.play = function(arraybuffer) {
     AT.Music.context.decodeAudioData(arraybuffer, function (buf) {
         AT.Music.source = AT.Music.context.createBufferSource();
+
         AT.Music.source.connect(AT.Music.context.destination);
         AT.Music.source.buffer = buf;
         AT.Music.source.start(0);
@@ -71,13 +51,17 @@ AT.Music.loadAndPlay = function(file) {
     freader.onload = function (e) {
         console.log(e);
         AT.Music.play(e.target.result);
+        AT.Music.setup = true;
     };
     freader.readAsArrayBuffer(file);
 };
 
 function handleFileSelect(evt) {
     var files = evt.target.files;
-
+    if (AT.Music.source) {
+        AT.Music.source.stop();
+    };
+    console.log(files);
     var output = [];
     for (var i = 0, f; f = files[i]; i++) {
         output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
@@ -90,9 +74,9 @@ function handleFileSelect(evt) {
     if (files[0].type.indexOf("audio") == 0) {
         AT.Music.loadAndPlay(files[0]);
     } else {
-        alert(files[0].name + " is not a audio=(")
+        alert(files[0].name + " is not an audio=(")
     }
-};
+}
 
 $(function() {
     document.getElementById('files').addEventListener('change', handleFileSelect, false);
