@@ -31,8 +31,11 @@ AT.render = function() {
     AT.moveCamera();
     AT.moveSpheres();
     AT.rotateAttractor();
+    if (AT.freq != 0)
+        AT.speed = AT.freq / 10;
+    console.log(AT.speed);
 
-    AT.game.processCollision()
+    //AT.game.processCollision();
 
     AT.renderer.render(AT.scene, AT.camera);
 };
