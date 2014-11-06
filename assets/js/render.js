@@ -13,8 +13,11 @@ AT.moveSpheres = function() {
 };
 
 AT.moveCamera = function() {
-    AT.camera.position.x = AT.relativeMouseX * 500;
-    AT.camera.position.y = AT.relativeMouseY * 500;
+    AT.camera.position.x = AT.relativeMouseX * 700;
+    AT.camera.position.y = AT.relativeMouseY * 700;
+    AT.cube.position.x = AT.camera.position.x;
+    AT.cube.position.y = AT.camera.position.y;
+    AT.camera.position.y += AT.attraptorSize;
 };
 
 AT.render = function() {
@@ -23,7 +26,5 @@ AT.render = function() {
     AT.moveCamera();
     AT.moveSpheres();
 
-    AT.cylinder.rotation.z += 0.01;
-    AT.cylinder.rotation.y += 0.1;
     AT.renderer.render(AT.scene, AT.camera);
 };

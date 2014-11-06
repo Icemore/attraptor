@@ -27,8 +27,13 @@ AT.speed = 10;
 AT.startZ = 0;
 AT.finishZ = 3000;
 AT.sphereCount = 200;
-AT.radius = 50;
+AT.radius = 70;
 AT.segments = 10;
+AT.attraptorSize = 100;
+
+AT.randomRadius = function() {
+    return AT.radius * (0.5 + Math.random());
+};
 
 AT.far = function() {
     return AT.finishZ - AT.startZ;
@@ -49,7 +54,7 @@ AT.createSpheres = function() {
 
     for (var i = 0; i < AT.sphereCount; ++i) {
         var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
-        var geometry = new THREE.CircleGeometry(AT.radius, AT.segments);
+        var geometry = new THREE.CircleGeometry(AT.randomRadius(), AT.segments);
         var sphere = new THREE.Mesh(geometry, material);
 
         sphere.position.z = AT.startZ + Math.random() * AT.far() / 1.3;
@@ -60,10 +65,18 @@ AT.createSpheres = function() {
     }
 };
 
+AT.getAttraptor = function() {
+    var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
+    var geometry = new THREE.BoxGeometry(AT.attraptorSize, AT.attraptorSize, AT.attraptorSize);
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.z = AT.finishZ - AT.attraptorSize * 2;
+    return mesh;
+};
+
 
 AT.world = function() {
-    AT.cylinder = AT.getCylinder();
-    AT.scene.add(AT.cylinder);
+    AT.cube = AT.getAttraptor();
+    AT.scene.add(AT.cube);
 
     AT.scene.add(AT.getSpaceSphere());
 
