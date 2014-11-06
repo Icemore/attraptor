@@ -68,7 +68,7 @@ AT.createSpheres = function() {
 };
 
 AT.getAttraptor = function() {
-    var attraptor = AT.game.getAttraptotModel();
+    var attraptor = AT.game.getAttraptorModel();
     attraptor.position.z = AT.finishZ - 2 * AT.attraptorSize;
     return attraptor;
 };

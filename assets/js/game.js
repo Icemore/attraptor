@@ -30,7 +30,7 @@ AT.game.setObjects = function(obj) {
     AT.game.objects['evil'] = obj;
 };
 
-AT.game.getAttraptotModel = function() {
+AT.game.getAttraptorModel = function() {
     return AT.attraptor.models[[this.curKarma, this.curHealth]];
 };
 
@@ -47,7 +47,7 @@ AT.game.processCollision = function(tag) {
 
 AT.game.handleInteractions = function() {
     for (var tag in this.objects) {
-        if (AT.attraptor.intersects(AT.game.getAttraptotModel(), this.objects[tag])) {
+        if (AT.attraptor.intersects(AT.game.getAttraptorModel(), this.objects[tag])) {
             this.processCollision(tag);
         }
     }
