@@ -6,6 +6,9 @@ AT.moveSpheres = function() {
             sphere.position.z -= AT.finishZ;
             AT.generateXY(sphere);
         }
+        sphere.material.color.r = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
+        sphere.material.color.g = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
+        sphere.material.color.b = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
     }
 };
 
