@@ -22,12 +22,7 @@ AT.getSpaceSphere = function() {
     return spacesphere;
 };
 
-AT.world = function() {
-    AT.attraptor = AT.getAttraptor();
-    AT.scene.add(AT.attraptor);
-
-    //AT.scene.add(AT.getSpaceSphere());
-
+AT.setUpLight = function() {
     var spotLight = new THREE.SpotLight(0xffffff);
     spotLight.position.set(-40, 60, -10);
     spotLight.intensity = 2;
@@ -37,4 +32,13 @@ AT.world = function() {
     spotLight2.position.set(40, -60, 30);
     spotLight2.intensity = 1.5;
     AT.scene.add(spotLight2);
+};
+
+AT.world = function() {
+    AT.attraptor = AT.getAttraptor();
+    AT.scene.add(AT.attraptor);
+
+    //AT.scene.add(AT.getSpaceSphere());
+
+    AT.setUpLight();
 };
