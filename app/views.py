@@ -11,7 +11,7 @@ def index():
 #    newuser = User(nickname = 'Chubakka', darkside=1,result=101, role = ROLE_USER)
 #    db.session.add(newuser)
 #    db.session.commit()
-    users = User.query.all()
+    users = User.query.order_by(User.result.desc()).all()
     for u in users:
         if u.darkside == 1:
 	        posts.append({'author': {'nickname':u.nickname}, 'darkside' : 'yeah', 'result': u.result})
