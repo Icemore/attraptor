@@ -47,7 +47,7 @@ AT.game.processCollision = function(tag) {
 
 AT.game.handleInteractions = function() {
     for (var tag in this.objects) {
-        if (AT.attraptor.intersects(AT.game.getAttraptorModel(), this.objects[tag])) {
+        if (AT.attraptor.intersects(AT.game.getAttraptorModel(), this.objects[tag]).length > 0) {
             this.processCollision(tag);
         }
     }

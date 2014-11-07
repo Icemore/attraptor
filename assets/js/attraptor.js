@@ -128,7 +128,8 @@ AT.attraptor.intersects = function(attr, collidableMeshList) {
     var originPoint = attr.position.clone();
 
     var points = this.boxToPoints(box);
-    //var result = [];
+    var result = [];
+
     for(var vertexIndex = 0; vertexIndex < points.length; vertexIndex++) {
 		var localVertex = points[vertexIndex].clone();
 		var globalVertex = localVertex.applyMatrix4(attr.matrix);
@@ -137,11 +138,10 @@ AT.attraptor.intersects = function(attr, collidableMeshList) {
 		var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
 		var collisionResults = ray.intersectObjects(collidableMeshList);
 
-
-        //result.concat(collisionResults.filter(function(val){return val.distance < directionVector.length()}));
-		if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length())
-            return true;
+        var near = collisionResults.filter(function(val){return val.distance < directionVector.length()});
+        var objects = near.map(function(t) { return t.object; });
+        result = result.concat(objects);
 	}
 
-    return false;
-}
+    return result;
+};

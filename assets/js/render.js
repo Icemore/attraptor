@@ -27,19 +27,27 @@ AT.rotateAttractor = function() {
     AT.cube.rotation.y += 0.02;
 };
 
-AT.interact = function() {
-    AT.game.handleInteractions();
+AT.interact = (function() {
+    var firstCall = true;
+    return function() {
+        if(firstCall) {
+            firstCall = false;
+            return;
+        }
 
-    var oldAttr = AT.cube;
-    var newAttr = AT.getAttraptor();
+        AT.game.handleInteractions();
 
-    AT.scene.remove(oldAttr);
-    AT.scene.add(newAttr);
+        var oldAttr = AT.cube;
+        var newAttr = AT.getAttraptor();
 
-    AT.cube = newAttr;
-    AT.cube.rotation.z = oldAttr.rotation.z;
-    AT.cube.rotation.y = oldAttr.rotation.y;
-};
+        AT.scene.remove(oldAttr);
+        AT.scene.add(newAttr);
+
+        AT.cube = newAttr;
+        AT.cube.rotation.z = oldAttr.rotation.z;
+        AT.cube.rotation.y = oldAttr.rotation.y;
+    }
+})();
 
 AT.render = function() {
     requestAnimationFrame(AT.render);
@@ -50,7 +58,6 @@ AT.render = function() {
     AT.rotateAttractor();
     if (AT.freq != 0)
         AT.speed = AT.freq / 10;
-    console.log(AT.speed);
 
     AT.updateScores();
 
