@@ -1,18 +1,56 @@
-{% extends "base.html" %}
-{% block content %}
-<h1>Hello, do you want to play attraptor?</h1>
-<h1>Leaderboard</h1>
-<table border="1" cellspacing="0" cellpadding="15" width="90%" height="130"> 
-{% for post in posts %}
-<tr>
-<td>{{post.author.nickname}}</td>
-{% if post.darkside %}
-<td style="background-color:#ffffcc">darkside</td>
-{% else %}
-<td style="background-color:#1e90ff">lightside</td>
-{% endif %}
-<td>{{post.result}}</td>
-</tr>
-{% endfor %}
-</table> 
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Attraptor is the answer, but what is the question?</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/assets/css/app.css">
+    <script src="/static/assets/js/vendor/jquery-2.1.1.js"></script>
+    <script src="/static/assets/js/vendor/three.js"></script>
+    <script src="/static/assets/js/vendor/threex.fullscreen.js"></script>
+    <script src="/static/assets/js/vendor/threex.windowresize.js"></script>
+    <script src="/static/assets/js/app.js"></script>
+    <script src="/static/assets/js/init.js"></script>
+    <script src="/static/assets/js/music.js"></script>
+    <script src="/static/assets/js/world.js"></script>
+    <script src="/static/assets/js/render.js"></script>
+    <script src="/static/assets/js/interaction.js"></script>
+    <script src="/static/assets/js/attraptor.js"></script>
+    <script src="/static/assets/js/game.js"></script>
+</head>
+<body>
+    <input type="file" id="files" name="files[]" multiple />
+    <output id="list"></output>
+
+    <div id="ui-indicators">
+        <div class="ui-text" id="points-wrapper">Points: <span id="points">100</span></div>
+        <div class="ui-text" id="karma-wrapper">Karma:   <span id="karma">100</span></div>
+        <div class="ui-text" id="health-wrapper">Health: <span id="health">100</span></div>
+    </div>
+
+
+    <div id="content" class="ui-screen-wrapper">
+        <div class="ui-screen">
+            <div id="title" class="title">Attraptor</div>
+            <div class="separator"></div>
+            <div id="ui-menu">
+                <div id="start-btn" class="element">Start</div>
+                <div id="leaderboard-btn" class="element">Leaderboard</div>
+            </div>
+         </div>
+    </div>
+	<table id="score"> 
+	{% for post in posts %}
+	<tr>
+	<td>{{post.author.nickname}}</td>
+	{% if post.darkside %}
+	<td>darkside</td>
+	{% else %}
+	<td>lightside</td>
+	{% endif %}
+	<td>{{post.result}}</td>
+	</tr>
+	{% endfor %}
+	</table> 
+</body>
+</html>
