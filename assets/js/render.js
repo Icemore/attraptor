@@ -4,7 +4,7 @@ AT.moveObjects = function(objs, count, speed, rc, gc, bc) {
     for (var i = 0; i < count; ++i) {
         var obj = objs[i];
 
-        obj.position.z += speed;
+        obj.position.z += speed + 0.1;
         if (obj.position.z > AT.finishZ) {
             obj.position.z -= AT.finishZ;
             AT.generateXY(obj);
