@@ -106,9 +106,14 @@ AT.world = function() {
     //spotLight2.intensity = 1.5;
     //AT.scene.add(spotLight2);
 
-    AT.asteroids = AT.createObjects(AT.createAsteroid, AT.asteroidCount);
-    AT.game.setObjects(AT.asteroids);
+    AT.objects = {};
+    AT.deletedObjects = {};
 
-    AT.goods = AT.createObjects(AT.createGood, AT.goodCount);
-    AT.bads = AT.createObjects(AT.createBad, AT.badCount);
+    AT.objects.asteroids = AT.createObjects(AT.createAsteroid, AT.asteroidCount);
+    AT.objects.good = AT.createObjects(AT.createGood, AT.goodCount);
+    AT.objects.bad = AT.createObjects(AT.createBad, AT.badCount);
+
+    AT.deletedObjects.asteroids = [];
+    AT.deletedObjects.good = [];
+    AT.deletedObjects.bad = [];
 };
