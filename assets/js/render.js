@@ -1,16 +1,20 @@
 var AT = AT || {};
 
-AT.moveSpheres = function() {
-    for (var i = 0; i < AT.sphereCount; ++i) {
-        var sphere = AT.asteroids[i];
-        sphere.position.z += AT.speed;
-        if (sphere.position.z > AT.finishZ) {
-            sphere.position.z -= AT.finishZ;
-            AT.generateXY(sphere);
+AT.moveObjects = function(objs, count, speed, rc, gc, bc) {
+    for (var i = 0; i < count; ++i) {
+        var obj = objs[i];
+
+        obj.position.z += speed;
+        if (obj.position.z > AT.finishZ) {
+            obj.position.z -= AT.finishZ;
+            AT.generateXY(obj);
         }
-        sphere.material.color.r = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
-        sphere.material.color.g = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
-        sphere.material.color.b = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
+
+        var value = 1 - ((AT.finishZ - obj.position.z) / AT.far());
+        var color = obj.material.color;
+        color.r = value * rc;
+        color.g = value * gc;
+        color.b = value * bc;
     }
 };
 
@@ -46,11 +50,13 @@ AT.render = function() {
 
     AT.interact();
     AT.moveCamera();
-    AT.moveSpheres();
     AT.rotateAttractor();
+
     if (AT.freq != 0)
         AT.speed = AT.freq / 10;
-    console.log(AT.speed);
+    AT.moveObjects(AT.asteroids, AT.asteroidCount, AT.speed, 1, 1, 1);
+    AT.moveObjects(AT.goods, AT.goodCount, AT.speed * 1.5, 0, 1, 0);
+    AT.moveObjects(AT.bads, AT.badCount, AT.speed * 1.5, 1, 0, 0);
 
     AT.updateScores();
 

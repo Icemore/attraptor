@@ -3,13 +3,15 @@ var AT = AT || {};
 AT.speed = 10;
 AT.startZ = 0;
 AT.finishZ = 3000;
-AT.sphereCount = 200;
+AT.asteroidCount = 150;
+AT.goodCount = 50;
+AT.badCount = 50;
 AT.radius = 70;
 AT.segments = 10;
 AT.attraptorSize = 50;
 
-AT.randomRadius = function() {
-    return AT.radius * (0.5 + Math.random());
+AT.randomRadius = function(radius) {
+    return radius * (0.5 + Math.random());
 };
 
 AT.far = function() {
@@ -21,8 +23,8 @@ AT.generateXY = function(obj) {
         obj.position.x = Math.random() * 10000 - 5000;
         obj.position.y = Math.random() * 10000 - 5000;
     } else {
-        obj.position.x = AT.camera.position.x + Math.random() * 1000 - 500;
-        obj.position.y = AT.camera.position.y + Math.random() * 1000 - 500;
+        obj.position.x = AT.camera.position.x + Math.random() * 500 - 250;
+        obj.position.y = AT.camera.position.y + Math.random() * 500 - 250;
     }
 };
 
@@ -32,21 +34,33 @@ AT.generateZ = function(obj) {
 
 AT.createAsteroid = function() {
     var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
-    var geometry = new THREE.CircleGeometry(AT.randomRadius(), AT.segments);
+    var geometry = new THREE.CircleGeometry(AT.randomRadius(AT.radius), AT.segments);
     return new THREE.Mesh(geometry, material);
 };
 
-AT.createAsteroids = function() {
-    AT.asteroids = new Array();
+AT.createGood = function() {
+    var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
+    var geometry = new THREE.CircleGeometry(AT.randomRadius(AT.radius / 2), AT.segments);
+    return new THREE.Mesh(geometry, material);
+};
 
-    for (var i = 0; i < AT.sphereCount; ++i) {
-        var asteroid = AT.createAsteroid();
-        AT.generateXY(asteroid);
-        AT.generateZ(asteroid);
+AT.createBad = function() {
+    var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
+    var geometry = new THREE.CircleGeometry(AT.randomRadius(AT.radius / 2), AT.segments);
+    return new THREE.Mesh(geometry, material);
+};
 
-        AT.asteroids[i] = asteroid;
-        AT.scene.add(asteroid);
+AT.createObjects = function(generator, count) {
+    var arr = new Array();
+    for (var i = 0; i < count; ++i) {
+        var obj = generator();
+        AT.generateXY(obj);
+        AT.generateZ(obj);
+
+        arr[i] = obj;
+        AT.scene.add(obj);
     }
+    return arr;
 };
 
 AT.getAttraptor = function() {
@@ -88,6 +102,9 @@ AT.world = function() {
     //spotLight2.intensity = 1.5;
     //AT.scene.add(spotLight2);
 
-    AT.createAsteroids();
+    AT.asteroids = AT.createObjects(AT.createAsteroid, AT.asteroidCount);
     AT.game.setObjects(AT.asteroids);
+
+    AT.goods = AT.createObjects(AT.createGood, AT.goodCount);
+    AT.bads = AT.createObjects(AT.createBad, AT.badCount);
 };
