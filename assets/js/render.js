@@ -2,7 +2,7 @@ var AT = AT || {};
 
 AT.moveSpheres = function() {
     for (var i = 0; i < AT.sphereCount; ++i) {
-        var sphere = AT.spheres[i];
+        var sphere = AT.asteroids[i];
         sphere.position.z += AT.speed;
         if (sphere.position.z > AT.finishZ) {
             sphere.position.z -= AT.finishZ;
