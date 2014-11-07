@@ -3,12 +3,16 @@ var AT = AT || {};
 AT.speed = 10;
 AT.startZ = 0;
 AT.finishZ = 3000;
-AT.asteroidCount = 150;
-AT.goodCount = 50;
-AT.badCount = 50;
-AT.radius = 70;
+AT.asteroidCount = 100;
+AT.goodCount = 30;
+AT.badCount = 30;
+AT.radius = 50;
 AT.segments = 10;
 AT.attraptorSize = 50;
+AT.relativeMouseX  = 0;
+AT.relativeMouseY = 0;
+AT.leftRight = 0;
+AT.topBottom = 0;
 
 AT.randomRadius = function(radius) {
     return radius * (0.5 + Math.random());
@@ -19,12 +23,12 @@ AT.far = function() {
 };
 
 AT.generateXY = function(obj) {
-    if (Math.random() < 0.95) {
+    if (Math.random() < 0.97) {
         obj.position.x = Math.random() * 10000 - 5000;
         obj.position.y = Math.random() * 10000 - 5000;
     } else {
-        obj.position.x = AT.camera.position.x + Math.random() * 500 - 250;
-        obj.position.y = AT.camera.position.y + Math.random() * 500 - 250;
+        obj.position.x = AT.cube.position.x + Math.random() * 500 - 250;
+        obj.position.y = AT.cube.position.y + Math.random() * 500 - 250;
     }
 };
 
@@ -34,19 +38,19 @@ AT.generateZ = function(obj) {
 
 AT.createAsteroid = function() {
     var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
-    var geometry = new THREE.CircleGeometry(AT.randomRadius(AT.radius), AT.segments);
+    var geometry = new THREE.SphereGeometry(AT.randomRadius(AT.radius));
     return new THREE.Mesh(geometry, material);
 };
 
 AT.createGood = function() {
     var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
-    var geometry = new THREE.CircleGeometry(AT.randomRadius(AT.radius / 2), AT.segments);
+    var geometry = new THREE.SphereGeometry(AT.randomRadius(AT.radius / 2));
     return new THREE.Mesh(geometry, material);
 };
 
 AT.createBad = function() {
     var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
-    var geometry = new THREE.CircleGeometry(AT.randomRadius(AT.radius / 2), AT.segments);
+    var geometry = new THREE.SphereGeometry(AT.randomRadius(AT.radius / 2));
     return new THREE.Mesh(geometry, material);
 };
 
