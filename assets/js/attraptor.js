@@ -1,21 +1,16 @@
 var AT = AT || {};
 
-AT.attraptor = {
-    minKarma: -5,
-    maxKarma: 5,
-    minHealth: 0,
-    maxHealth: 10
-};
+AT.attraptor = {};
 
 AT.attraptor.init = function() {
     AT.attraptor.models = {};
 
-    var karma_range = this.maxKarma - this.minKarma;
-    var health_range = this.maxHealth - this.minHealth;
-    for(var k = this.minKarma; k <= this.maxKarma; ++k) {
-        for(var h = this.minHealth; h <= this.maxHealth; ++h) {
-            var nk = (k - this.minKarma) / karma_range;
-            var nh = (h - this.minHealth) / health_range;
+    var karma_range = AT.game.maxKarma - AT.game.minKarma;
+    var health_range = AT.game.maxHealth - AT.game.minHealth;
+    for(var k = AT.game.minKarma; k <= AT.game.maxKarma; ++k) {
+        for(var h = AT.game.minHealth; h <= AT.game.maxHealth; ++h) {
+            var nk = (k - AT.game.minKarma) / karma_range;
+            var nh = (h - AT.game.minHealth) / health_range;
 
             AT.attraptor.models[[k, h]] = this.generateAttraptor(nk, nh);
         }
