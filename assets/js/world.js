@@ -1,6 +1,7 @@
 var AT = AT || {};
 
 AT.speed = 10;
+AT.speedCoef = 1;
 AT.startZ = 0;
 AT.finishZ = 3000;
 AT.asteroidCount = 110;

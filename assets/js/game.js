@@ -31,6 +31,7 @@ AT.game.getAttraptorModel = function() {
 
 AT.game.die = function() {
     console.log("dead");
+    AT.ended = true;
     AT.game.curHealth = 0;
 };
 

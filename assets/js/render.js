@@ -4,7 +4,7 @@ AT.moveObjects = function(objs, tag, deleted, speed, rc, gc, bc) {
     for (var i = 0; i < objs[tag].length; ++i) {
         var obj = objs[tag][i];
 
-        obj.position.z += speed;
+        obj.position.z += speed * AT.speedCoef;
         if (obj.position.z > AT.finishZ) {
             obj.position.z -= AT.finishZ;
             AT.generateXY(obj);
@@ -62,14 +62,19 @@ AT.interact = (function() {
 })();
 
 AT.render = function() {
-    requestAnimationFrame(AT.render);
+    if (!AT.ended) {
+        requestAnimationFrame(AT.render);
+    } else {
+        $(document).trigger('game-ended');
+    }
+    AT.speedCoef = AT.speedCoef * 1.0001;
 
     AT.interact();
     AT.moveCamera();
     AT.rotateAttractor();
 
     if (AT.freq != 0)
-        AT.speed = AT.freq / 10;
+        AT.speed = AT.speed + (AT.freq - AT.speed * 7) / 7;
 
     AT.moveObjects(AT.objects, 'asteroids', false, AT.speed, 1, 1, 1);
     AT.moveObjects(AT.objects, 'good', false, AT.speed * 1.5, 0, 1, 0);

@@ -30,14 +30,20 @@
 
 
     <div id="content" class="ui-screen-wrapper">
-        <div class="ui-screen">
+        <div id="start-screen" class="ui-screen">
             <div id="title" class="title">Attraptor</div>
             <div class="separator"></div>
             <div id="ui-menu">
-                <div id="start-btn" class="element">Start</div>
-                <div id="leaderboard-btn" class="element">Leaderboard</div>
+                <div id="start-btn" class="element hovered">Start</div>
+                <div id="leaderboard-btn" class="element hovered">Leaderboard</div>
             </div>
          </div>
+
+        <div id="end-screen" class="ui-screen">
+            <div class="title">You died!</div>
+            <div class="separator"></div>
+            <div class="element">Score: <span id="scores"></span></div>
+        </div>
     </div>
 </body>
 </html>
