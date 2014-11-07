@@ -6,15 +6,14 @@ AT.game = {
     minHealth: 0,
     maxHealth: 10,
 
-    objects: {'evil': []},
-    scoreGain: {'evil': 100},
-    karmaGain: {'evil':  1},
-    healthGain: {'evil': 0}
+    scoreGain: {'asteroids': 100, 'good': 100, 'bad': -100},
+    karmaGain: {'asteroids':  0, 'good': 1, 'bad': -1},
+    healthGain: {'asteroids': 0, 'good': 0, 'bad': 0}
 };
 
 AT.game.init = function() {
     AT.game.curKarma = 0;
-    AT.game.curHealth = this.maxHealth;
+    AT.game.curHealth = AT.game.maxHealth;
     AT.game.curPoints = 0;
 
     AT.attraptor.init();
@@ -26,15 +25,11 @@ AT.updateScores = function() {
     $('#karma').text(AT.game.curKarma);
 };
 
-AT.game.setObjects = function(obj) {
-    AT.game.objects['evil'] = obj;
-};
-
 AT.game.getAttraptorModel = function() {
     return AT.attraptor.models[[this.curKarma, this.curHealth]];
 };
 
-AT.game.processCollision = function(tag) {
+AT.game.processCollision = function(tag, obj) {
     this.curHealth += this.healthGain[tag];
     this.curHealth = Math.min(this.curHealth, this.maxHealth);
 
@@ -43,12 +38,19 @@ AT.game.processCollision = function(tag) {
     this.curKarma += this.karmaGain[tag];
     this.curKarma = Math.min(this.curKarma, this.maxKarma);
     this.curKarma = Math.max(this.curKarma, this.minKarma);
+
+    //remove object from scene
+    var idx = AT.objects[tag].indexOf(obj);
+    AT.objects[tag].splice(idx, 1);
+    AT.deletedObjects[tag].push(obj);
+    AT.scene.remove(obj);
 };
 
 AT.game.handleInteractions = function() {
-    for (var tag in this.objects) {
-        if (AT.attraptor.intersects(AT.game.getAttraptorModel(), this.objects[tag]).length > 0) {
-            this.processCollision(tag);
+    for (var tag in AT.objects) {
+        var collided = AT.attraptor.intersects(AT.game.getAttraptorModel(), AT.objects[tag]);
+        if (collided.length > 0) {
+            this.processCollision(tag, collided[0]);
         }
     }
 };
