@@ -21,8 +21,29 @@
 <body>
     <input type="file" id="files" name="files[]" multiple />
     <output id="list"></output>
-    <div class="ui-text" id="points-wrapper">Points: <span id="points">100</span></div>
-    <div class="ui-text" id="karma-wrapper">Karma:   <span id="karma">100</span></div>
-    <div class="ui-text" id="health-wrapper">Health: <span id="health">100</span></div>
+
+    <div id="ui-indicators">
+        <div class="ui-text" id="points-wrapper">Points: <span id="points">100</span></div>
+        <div class="ui-text" id="karma-wrapper">Karma:   <span id="karma">100</span></div>
+        <div class="ui-text" id="health-wrapper">Health: <span id="health">100</span></div>
+    </div>
+
+
+    <div id="content" class="ui-screen-wrapper">
+        <div id="start-screen" class="ui-screen">
+            <div id="title" class="title">Attraptor</div>
+            <div class="separator"></div>
+            <div id="ui-menu">
+                <div id="start-btn" class="element hovered">Start</div>
+                <div id="leaderboard-btn" class="element hovered">Leaderboard</div>
+            </div>
+         </div>
+
+        <div id="end-screen" class="ui-screen">
+            <div class="title">You died!</div>
+            <div class="separator"></div>
+            <div class="element">Score: <span id="scores"></span></div>
+        </div>
+    </div>
 </body>
 </html>

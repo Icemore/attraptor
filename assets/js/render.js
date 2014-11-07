@@ -1,25 +1,45 @@
 var AT = AT || {};
 
-AT.moveSpheres = function() {
-    for (var i = 0; i < AT.sphereCount; ++i) {
-        var sphere = AT.spheres[i];
-        sphere.position.z += AT.speed;
-        if (sphere.position.z > AT.finishZ) {
-            sphere.position.z -= AT.finishZ;
-            AT.generateXY(sphere);
+AT.moveObjects = function(objs, tag, deleted, speed, rc, gc, bc) {
+    var todel = [];
+
+    for (var i = 0; i < objs[tag].length; ++i) {
+        var obj = objs[tag][i];
+
+        obj.position.z += speed * AT.speedCoef;
+        if (obj.position.z > AT.finishZ) {
+            obj.position.z -= AT.finishZ;
+            AT.generateXY(obj);
+
+            if(deleted === true) {
+                AT.objects[tag].push(obj);
+                AT.scene.add(obj);
+                todel.push(obj);
+            }
         }
-        sphere.material.color.r = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
-        sphere.material.color.g = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
-        sphere.material.color.b = 1 - ((AT.finishZ - sphere.position.z) / AT.far());
+
+        var value = 1 - ((AT.finishZ - obj.position.z) / AT.far());
+        var color = obj.material.color;
+        color.r = value * rc;
+        color.g = value * gc;
+        color.b = value * bc;
+    }
+
+    for(var i = 0; i < todel.length; ++i) {
+        var idx = objs[tag].indexOf(todel[i]);
+        objs[tag].splice(idx, 1);
     }
 };
 
 AT.moveCamera = function() {
-    AT.camera.position.x = AT.relativeMouseX * 700;
-    AT.camera.position.y = AT.relativeMouseY * 700;
-    AT.cube.position.x = AT.camera.position.x;
-    AT.cube.position.y = AT.camera.position.y;
-    AT.camera.position.y += AT.attraptorSize;
+    AT.cube.position.x = AT.relativeMouseX * innerWidth * 1.5;
+    AT.cube.position.y = -AT.relativeMouseY * innerHeight * 2;
+
+    AT.camera.position.x = AT.cube.position.x;
+    AT.camera.position.y = AT.cube.position.y + AT.attraptorSize;
+
+    AT.leftRight = 0;
+    AT.topBottom = 0;
 };
 
 AT.rotateAttractor = function() {
@@ -27,30 +47,49 @@ AT.rotateAttractor = function() {
     AT.cube.rotation.y += 0.02;
 };
 
-AT.interact = function() {
-    AT.game.handleInteractions();
+AT.interact = (function() {
+    var firstCall = true;
+    return function() {
+        if(firstCall) {
+            firstCall = false;
+            return;
+        }
 
-    var oldAttr = AT.cube;
-    var newAttr = AT.getAttraptor();
+        AT.game.handleInteractions();
 
-    AT.scene.remove(oldAttr);
-    AT.scene.add(newAttr);
+        var oldAttr = AT.cube;
+        var newAttr = AT.getAttraptor();
 
-    AT.cube = newAttr;
-    AT.cube.rotation.z = oldAttr.rotation.z;
-    AT.cube.rotation.y = oldAttr.rotation.y;
-};
+        AT.scene.remove(oldAttr);
+        AT.scene.add(newAttr);
+
+        AT.cube = newAttr;
+        AT.cube.rotation.z = oldAttr.rotation.z;
+        AT.cube.rotation.y = oldAttr.rotation.y;
+    }
+})();
 
 AT.render = function() {
-    requestAnimationFrame(AT.render);
+    if (!AT.ended) {
+        requestAnimationFrame(AT.render);
+    } else {
+        $(document).trigger('game-ended');
+    }
+    AT.speedCoef = AT.speedCoef * 1.0001;
 
     AT.interact();
     AT.moveCamera();
-    AT.moveSpheres();
     AT.rotateAttractor();
+
     if (AT.freq != 0)
-        AT.speed = AT.freq / 10;
-    console.log(AT.speed);
+        AT.speed = AT.speed + (AT.freq - AT.speed * 7) / 7;
+
+    AT.moveObjects(AT.objects, 'asteroids', false, AT.speed, 1, 0.7, 0);
+    AT.moveObjects(AT.objects, 'good', false, AT.speed * 1.5, 0, 1, 0);
+    AT.moveObjects(AT.objects, 'bad', false, AT.speed * 1.5, 1, 0, 0);
+    AT.moveObjects(AT.deletedObjects, 'asteroids', true, AT.speed, 1, 1, 1);
+    AT.moveObjects(AT.deletedObjects, 'good', true, AT.speed * 1.5, 0, 1, 0);
+    AT.moveObjects(AT.deletedObjects, 'bad', true, AT.speed * 1.5, 1, 0, 0);
 
     AT.updateScores();
 

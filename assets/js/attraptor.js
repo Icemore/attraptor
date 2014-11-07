@@ -1,21 +1,16 @@
 var AT = AT || {};
 
-AT.attraptor = {
-    minKarma: -5,
-    maxKarma: 5,
-    minHealth: 0,
-    maxHealth: 10
-};
+AT.attraptor = {};
 
 AT.attraptor.init = function() {
     AT.attraptor.models = {};
 
-    var karma_range = this.maxKarma - this.minKarma;
-    var health_range = this.maxHealth - this.minHealth;
-    for(var k = this.minKarma; k <= this.maxKarma; ++k) {
-        for(var h = this.minHealth; h <= this.maxHealth; ++h) {
-            var nk = (k - this.minKarma) / karma_range;
-            var nh = (h - this.minHealth) / health_range;
+    var karma_range = AT.game.maxKarma - AT.game.minKarma;
+    var health_range = AT.game.maxHealth - AT.game.minHealth;
+    for(var k = AT.game.minKarma; k <= AT.game.maxKarma; ++k) {
+        for(var h = AT.game.minHealth; h <= AT.game.maxHealth; ++h) {
+            var nk = (k - AT.game.minKarma) / karma_range;
+            var nh = (h - AT.game.minHealth) / health_range;
 
             AT.attraptor.models[[k, h]] = this.generateAttraptor(nk, nh);
         }
@@ -27,7 +22,7 @@ AT.attraptor.generateAttraptor = function(karma, health) {
     params.a = 5; params.b = 15; params.c = 0.8;
     params.interval = 0.05;
     params.point_size = 0.5;
-    params.iterations = 1000 * (5 * (1 - health) + 100 * (health));
+    params.iterations = 1000 * (5 * (1 - health*health) + 100 * (health*health));
     params.scale = 3;
 
     var min_coef = 0.1, max_coef = 0.6;
@@ -133,7 +128,8 @@ AT.attraptor.intersects = function(attr, collidableMeshList) {
     var originPoint = attr.position.clone();
 
     var points = this.boxToPoints(box);
-    //var result = [];
+    var result = [];
+
     for(var vertexIndex = 0; vertexIndex < points.length; vertexIndex++) {
 		var localVertex = points[vertexIndex].clone();
 		var globalVertex = localVertex.applyMatrix4(attr.matrix);
@@ -142,11 +138,10 @@ AT.attraptor.intersects = function(attr, collidableMeshList) {
 		var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
 		var collisionResults = ray.intersectObjects(collidableMeshList);
 
-
-        //result.concat(collisionResults.filter(function(val){return val.distance < directionVector.length()}));
-		if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length())
-            return true;
+        var near = collisionResults.filter(function(val){return val.distance < directionVector.length()});
+        var objects = near.map(function(t) { return t.object; });
+        result = result.concat(objects);
 	}
 
-    return false;
-}
+    return result;
+};

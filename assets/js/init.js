@@ -15,9 +15,11 @@ AT.init = function() {
 
     AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, AT.far());
     AT.camera.position.z = AT.finishZ;
+    AT.camera.position.y += AT.attraptorSize;
     new THREEx.WindowResize(AT.renderer, AT.camera);
 
     AT.game.init();
 
     document.addEventListener('mousemove', AT.processMouseMove);
+    document.addEventListener('keydown', AT.processKeyDown);
 };
