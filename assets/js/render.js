@@ -53,7 +53,8 @@ AT.render = function() {
     AT.rotateAttractor();
 
     if (AT.freq != 0)
-        AT.speed = AT.freq / 10;
+        AT.speed = AT.speed + (AT.freq - AT.speed * 7) / 7;
+    console.log(AT.speed);
     AT.moveObjects(AT.asteroids, AT.asteroidCount, AT.speed, 1, 1, 1);
     AT.moveObjects(AT.goods, AT.goodCount, AT.speed * 1.5, 0, 1, 0);
     AT.moveObjects(AT.bads, AT.badCount, AT.speed * 1.5, 1, 0, 0);
