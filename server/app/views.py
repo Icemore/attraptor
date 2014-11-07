@@ -20,13 +20,14 @@ def index():
 
 @app.route('/add', methods = ['POST'])
 def gameover():
-        data = request.data
-        dataDict = json.loads(data)
-        if dataDict[score] < 0:
-		    darkside = 1
-		    dataDict[score] = -dataDict[score]
-        else:
-		    darkside = 0
-        newuser = User(nickname = dataDicr[name], darkside = darkside, result = dataDict[score], role = ROLE_USER)
-        db.session.add(newuser)
-        db.session.commit()
+	data = request.data
+	dataDict = json.loads(data)
+	if dataDict['score'] < 0:
+		darkside = 1
+		dataDict['score'] = -dataDict['score']
+	else:
+		darkside = 0
+	newuser = User(nickname = dataDict['name'].encode('ascii','ignore'), darkside = darkside, result = dataDict['score'], role = ROLE_USER)
+	db.session.add(newuser)
+	db.session.commit()
+	return ''
