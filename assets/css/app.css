@@ -18,6 +18,10 @@ body {
     display: none;
 }
 
+#end-screen {
+    display: none;
+}
+
 .ui-text {
     color: white;
     font-size: 20px;
@@ -46,7 +50,6 @@ body {
     font-size: 25px;
     font-weight: bold;
     text-align: center;
-    cursor: pointer;
     padding: 18px;
     border: 2px solid rgba(200,200,200,0.1);
     background-color: rgba(0,0,0,0.4);
@@ -55,7 +58,11 @@ body {
     color: rgba(255, 255, 255, 0.7);
 }
 
-.element:hover{
+.element.hovered {
+    cursor: pointer;
+}
+
+.element.hovered:hover{
     color: #FFF;
     text-shadow:0 0 5px rgba(255, 255, 255, 0.6);
     border: 2px solid rgba(255, 85, 57, 0.80);

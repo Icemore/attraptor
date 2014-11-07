@@ -62,7 +62,11 @@ AT.interact = (function() {
 })();
 
 AT.render = function() {
-    requestAnimationFrame(AT.render);
+    if (!AT.ended) {
+        requestAnimationFrame(AT.render);
+    } else {
+        $(document).trigger('game-ended');
+    }
     AT.speedCoef = AT.speedCoef * 1.0001;
 
     AT.interact();
