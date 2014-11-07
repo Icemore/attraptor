@@ -1,4 +1,4 @@
-var AT = {};
+var AT = AT || {};
 
 AT.init = function() {
     AT.renderer = new THREE.WebGLRenderer({antialiasing: true});
@@ -13,34 +13,11 @@ AT.init = function() {
 
     AT.scene = new THREE.Scene();
 
-    // PATH
-    AT.parent = new THREE.Object3D();
-    AT.scene.add(AT.parent);
-    AT.camera = new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 0.1, 1000 );
-    AT.parent.add(AT.camera);
-
-    // when resize
+    AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, AT.far());
+    AT.camera.position.z = AT.finishZ;
     new THREEx.WindowResize(AT.renderer, AT.camera);
+
+    AT.game.init();
+
+    document.addEventListener('mousemove', AT.processMouseMove);
 };
-
-AT.world = function() {
-    var geometry = new THREE.CylinderGeometry( 5, 5, 20, 32 );
-    var material = new THREE.MeshBasicMaterial( { color: 0xfffff , wireframe: true} );
-    AT.cylinder = new THREE.Mesh( geometry, material );
-    AT.scene.add(AT.cylinder);
-};
-
-AT.render = function() {
-    requestAnimationFrame(AT.render);
-    AT.cylinder.rotation.z += 0.01;
-    AT.cylinder.rotation.y += AT.freq / 100;
-    AT.renderer.render(AT.scene, AT.camera);
-};
-
-$(document).ready(function() {
-    AT.init();
-    AT.world();
-
-    AT.camera.position.z = 20;
-    AT.render();
-});
