@@ -24,11 +24,14 @@ AT.moveObjects = function(objs, tag, deleted, speed, rc, gc, bc) {
 };
 
 AT.moveCamera = function() {
-    AT.camera.position.x = AT.relativeMouseX * 700;
-    AT.camera.position.y = AT.relativeMouseY * 700;
-    AT.cube.position.x = AT.camera.position.x;
-    AT.cube.position.y = AT.camera.position.y;
-    AT.camera.position.y += AT.attraptorSize;
+    AT.cube.position.x = AT.relativeMouseX * innerWidth * 1.5;
+    AT.cube.position.y = -AT.relativeMouseY * innerHeight * 2;
+
+    AT.camera.position.x = AT.cube.position.x;
+    AT.camera.position.y = AT.cube.position.y + AT.attraptorSize;
+
+    AT.leftRight = 0;
+    AT.topBottom = 0;
 };
 
 AT.rotateAttractor = function() {
