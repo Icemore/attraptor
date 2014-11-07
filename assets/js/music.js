@@ -40,6 +40,8 @@ AT.Music.play = function(arraybuffer) {
         AT.Music.source = AT.Music.context.createBufferSource();
         AT.Music.source.connect(AT.Music.context.destination);
         AT.Music.source.buffer = buf;
+        AT.Music.context.loop = true;
+        AT.Music.source.loop = true;
 
         AT.Music.analyser = AT.Music.context.createAnalyser();
         AT.Music.source.connect(AT.Music.analyser);
