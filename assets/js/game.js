@@ -35,7 +35,14 @@ AT.game.die = function() {
     AT.game.curHealth = 0;
 };
 
+AT.game.collisionParity = 0;
+
 AT.game.processCollision = function(tag, obj) {
+    AT.game.collisionParity ^= 1;
+    if(AT.game.collisionParity % 2 === 1) {
+        return;
+    }
+
     this.curHealth += this.healthGain[tag];
     this.curHealth = Math.min(this.curHealth, this.maxHealth);
     if(this.curHealth < 0) {

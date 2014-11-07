@@ -1,6 +1,8 @@
 var AT = AT || {};
 
 AT.moveObjects = function(objs, tag, deleted, speed, rc, gc, bc) {
+    var todel = [];
+
     for (var i = 0; i < objs[tag].length; ++i) {
         var obj = objs[tag][i];
 
@@ -11,7 +13,8 @@ AT.moveObjects = function(objs, tag, deleted, speed, rc, gc, bc) {
 
             if(deleted) {
                 AT.objects[tag].push(obj);
-                AT.deletedObjects[tag].splice(i, 1);
+                AT.scene.add(obj);
+                if(deleted) todel.push(obj);
             }
         }
 
@@ -20,6 +23,11 @@ AT.moveObjects = function(objs, tag, deleted, speed, rc, gc, bc) {
         color.r = value * rc;
         color.g = value * gc;
         color.b = value * bc;
+    }
+
+    for(var cur in todel) {
+        var idx = objs.indexOf(cur);
+        objs.splice(idx, 1);
     }
 };
 
