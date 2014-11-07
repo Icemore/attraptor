@@ -11,6 +11,9 @@ $(document).ready(function() {
     $(document).on('music-started', function() {
         $('#content').hide();
         $('#ui-indicators').show();
+        $('body').css({
+            'cursor' : 'none'
+        });
         AT.render();
     })
 });
