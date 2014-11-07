@@ -1,3 +1,5 @@
+var AT = AT || {};
+
 AT.moveSpheres = function() {
     for (var i = 0; i < AT.sphereCount; ++i) {
         var sphere = AT.spheres[i];
@@ -20,11 +22,37 @@ AT.moveCamera = function() {
     AT.camera.position.y += AT.attraptorSize;
 };
 
+AT.rotateAttractor = function() {
+    AT.cube.rotation.z += 0.02;
+    AT.cube.rotation.y += 0.02;
+};
+
+AT.interact = function() {
+    AT.game.handleInteractions();
+
+    var oldAttr = AT.cube;
+    var newAttr = AT.getAttraptor();
+
+    AT.scene.remove(oldAttr);
+    AT.scene.add(newAttr);
+
+    AT.cube = newAttr;
+    AT.cube.rotation.z = oldAttr.rotation.z;
+    AT.cube.rotation.y = oldAttr.rotation.y;
+};
+
 AT.render = function() {
     requestAnimationFrame(AT.render);
 
+    AT.interact();
     AT.moveCamera();
     AT.moveSpheres();
+    AT.rotateAttractor();
+    if (AT.freq != 0)
+        AT.speed = AT.freq / 10;
+    console.log(AT.speed);
+
+    AT.updateScores();
 
     AT.renderer.render(AT.scene, AT.camera);
 };

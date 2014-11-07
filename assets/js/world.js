@@ -1,3 +1,5 @@
+var AT = AT || {};
+
 AT.getCylinder = function() {
     var geometry = new THREE.CylinderGeometry(5, 5, 20, 32);
     var material = new THREE.MeshBasicMaterial({ color: 0xfffff , wireframe: true});
@@ -29,7 +31,7 @@ AT.finishZ = 3000;
 AT.sphereCount = 200;
 AT.radius = 70;
 AT.segments = 10;
-AT.attraptorSize = 100;
+AT.attraptorSize = 50;
 
 AT.randomRadius = function() {
     return AT.radius * (0.5 + Math.random());
@@ -66,11 +68,9 @@ AT.createSpheres = function() {
 };
 
 AT.getAttraptor = function() {
-    var material = new THREE.MeshBasicMaterial({ color: 0xAAAAAA });
-    var geometry = new THREE.BoxGeometry(AT.attraptorSize, AT.attraptorSize, AT.attraptorSize);
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.z = AT.finishZ - AT.attraptorSize * 2;
-    return mesh;
+    var attraptor = AT.game.getAttraptorModel();
+    attraptor.position.z = AT.finishZ - 2 * AT.attraptorSize;
+    return attraptor;
 };
 
 
@@ -81,6 +81,7 @@ AT.world = function() {
     AT.scene.add(AT.getSpaceSphere());
 
     AT.createSpheres();
+    AT.game.setObjects(AT.spheres);
 
     var spotLight = new THREE.SpotLight(0xffffff);
     spotLight.position.set(-40, 60, -10);

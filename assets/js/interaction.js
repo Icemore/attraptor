@@ -1,3 +1,5 @@
+var AT = AT || {};
+
 AT.processMouseMove = function(event) {
     var hw = window.innerWidth / 2;
     var hh = window.innerHeight / 2;

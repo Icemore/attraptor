@@ -1,4 +1,4 @@
-var AT = {};
+var AT = AT || {};
 
 AT.init = function() {
     AT.renderer = new THREE.WebGLRenderer({antialiasing: true});
@@ -16,6 +16,8 @@ AT.init = function() {
     AT.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, AT.far());
     AT.camera.position.z = AT.finishZ;
     new THREEx.WindowResize(AT.renderer, AT.camera);
+
+    AT.game.init();
 
     document.addEventListener('mousemove', AT.processMouseMove);
 };
