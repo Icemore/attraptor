@@ -4,7 +4,7 @@ AT.moveObjects = function(objs, count, speed, rc, gc, bc) {
     for (var i = 0; i < count; ++i) {
         var obj = objs[i];
 
-        obj.position.z += speed + 0.1;
+        obj.position.z += speed * AT.speedCoef;
         if (obj.position.z > AT.finishZ) {
             obj.position.z -= AT.finishZ;
             AT.generateXY(obj);
@@ -47,6 +47,7 @@ AT.interact = function() {
 
 AT.render = function() {
     requestAnimationFrame(AT.render);
+    AT.speedCoef = AT.speedCoef * 1.0001;
 
     AT.interact();
     AT.moveCamera();
