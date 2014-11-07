@@ -69,7 +69,7 @@ AT.render = function() {
     AT.rotateAttractor();
 
     if (AT.freq != 0)
-        AT.speed = AT.freq / 10;
+        AT.speed = AT.speed + (AT.freq - AT.speed * 7) / 7;
 
     AT.moveObjects(AT.objects, 'asteroids', false, AT.speed, 1, 1, 1);
     AT.moveObjects(AT.objects, 'good', false, AT.speed * 1.5, 0, 1, 0);
