@@ -48,6 +48,7 @@ AT.Music.play = function(arraybuffer) {
 
         AT.Music.source.start(0);
         AT.Music.setup = true;
+        $(document).trigger('music-started');
     });
 };
 
@@ -60,7 +61,7 @@ AT.Music.loadAndPlay = function(file) {
     freader.readAsArrayBuffer(file);
 };
 
-function handleFileSelect(evt) {
+AT.Music.handleFileSelect = function (evt) {
     var files = evt.target.files;
     if (AT.Music.source) {
         AT.Music.source.stop();
@@ -73,15 +74,10 @@ function handleFileSelect(evt) {
             '</li>');
     }
 
-    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    $('#list').html('<ul>' + output.join('') + '</ul>');
     if (files[0].type.indexOf("audio") == 0) {
         AT.Music.loadAndPlay(files[0]);
     } else {
         alert(files[0].name + " is not an audio=(")
     }
-}
-
-$(function() {
-    document.getElementById('files').addEventListener('change', handleFileSelect, false);
-    AT.Music.init();
-});
+};
