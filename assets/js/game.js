@@ -6,8 +6,8 @@ AT.game = {
     minHealth: 0,
     maxHealth: 10,
 
-    scoreGain: {'asteroids': 0, 'good': 100, 'bad': -100},
-    karmaGain: {'asteroids':  0, 'good': 1, 'bad': -1},
+    scoreGain: {'asteroids': 0, 'good': -100, 'bad': 100},
+    karmaGain: {'asteroids':  0, 'good': -1, 'bad': 1},
     healthGain: {'asteroids': -1, 'good': 0, 'bad': 0}
 };
 
@@ -52,7 +52,7 @@ AT.game.processCollision = function(tag, obj) {
     this.curPoints += this.scoreGain[tag];
 
     //this.curKarma += this.karmaGain[tag];
-    this.curKarma = (this.curPoints / 1000) | 0;
+    this.curKarma = (this.curPoints / 500) | 0;
     this.curKarma = Math.min(this.curKarma, this.maxKarma);
     this.curKarma = Math.max(this.curKarma, this.minKarma);
 

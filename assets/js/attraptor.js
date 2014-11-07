@@ -22,7 +22,7 @@ AT.attraptor.generateAttraptor = function(karma, health) {
     params.a = 5; params.b = 15; params.c = 0.8;
     params.interval = 0.05;
     params.point_size = 0.5;
-    params.iterations = 1000 * (5 * (1 - health) + 100 * (health));
+    params.iterations = 1000 * (5 * (1 - health*health) + 100 * (health*health));
     params.scale = 3;
 
     var min_coef = 0.1, max_coef = 0.6;

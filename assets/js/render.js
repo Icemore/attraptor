@@ -84,7 +84,7 @@ AT.render = function() {
     if (AT.freq != 0)
         AT.speed = AT.speed + (AT.freq - AT.speed * 7) / 7;
 
-    AT.moveObjects(AT.objects, 'asteroids', false, AT.speed, 1, 1, 1);
+    AT.moveObjects(AT.objects, 'asteroids', false, AT.speed, 1, 0.7, 0);
     AT.moveObjects(AT.objects, 'good', false, AT.speed * 1.5, 0, 1, 0);
     AT.moveObjects(AT.objects, 'bad', false, AT.speed * 1.5, 1, 0, 0);
     AT.moveObjects(AT.deletedObjects, 'asteroids', true, AT.speed, 1, 1, 1);
